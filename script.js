@@ -7,6 +7,8 @@ const restartBtn = document.getElementById('restart-btn');
 // Load custom image asset for the Snake's head
 const headImage = new Image();
 headImage.src = 'personA.png';
+const eatSound = new Audio('Audio Person A.ogg');
+eatSound.preload = 'auto';
 
 // Configured values based on your custom requirements
 const GRID_SIZE = 10;   // Set to 10 as specified for high block visibility
@@ -85,11 +87,15 @@ function gameStep() {
 
     snake.unshift(head);
 
-    // Score point check
-    if (head.x === food.x && head.y === food.y) {
-        score += 10;
-        scoreElement.textContent = score;
-        
+   // Score point check 
+if (head.x === food.x && head.y === food.y) { 
+
+    // Play Person A sound
+    eatSound.currentTime = 0;
+    eatSound.play().catch(() => {});
+
+    score += 10; 
+    scoreElement.textContent = score;
         // Track highscore record breaking
         if (score > highScore) {
             highScore = score;
